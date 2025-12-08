@@ -1,0 +1,24 @@
+FINAL TRAINING METRICS
+==================================================
+
+Test Set Results:
+Loss: 0.1509
+Accuracy: 0.9300
+F1_Weighted: 0.9294
+F1_Macro: 0.8832
+Precision_Weighted: 0.9298
+Precision_Macro: 0.8938
+Recall_Weighted: 0.9300
+Recall_Macro: 0.8754
+Runtime: 52.4524
+Samples_Per_Second: 38.1300
+Steps_Per_Second: 2.3830
+
+Overall Test Accuracy: 0.9300
+Per-Class Accuracy:
+  Sadness: 0.9690
+  Joy: 0.9540
+  Love: 0.8176
+  Anger: 0.9164
+  Fear: 0.9286
+  Surprise: 0.6667
