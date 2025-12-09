@@ -64,7 +64,9 @@ Thumbs.db
 *.log
 logs/
 
-# Model artifacts (keep saved_mood_model but ignore others)
+# Model artifacts (large files)
+*.safetensors
+saved_mood_model/model.safetensors
 results/
 !results/.gitkeep
 wandb/
