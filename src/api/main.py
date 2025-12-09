@@ -20,7 +20,7 @@ from transformers import RobertaTokenizer, RobertaForSequenceClassification
 # Configuration
 # ============================================================================
 
-MODEL_PATH = "./saved_mood_model"
+MODEL_PATH = os.getenv("MODEL_PATH", "./models/mood_model")
 API_KEY = os.getenv("ESCAPE_API_KEY", "dev-key-change-in-production")
 
 # ============================================================================

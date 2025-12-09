@@ -15,8 +15,9 @@ import seaborn as sns
 
 # 1. Configuration
 MODEL_NAME = "roberta-base"
-OUTPUT_DIR = "./saved_mood_model"
-NUM_EPOCHS = 3 # Increase for better accuracy
+OUTPUT_DIR = "./models/mood_model"
+DATA_DIR = "./data"
+NUM_EPOCHS = 3
 BATCH_SIZE = 16
 
 def compute_metrics(eval_pred):
@@ -141,6 +142,7 @@ def train_model():
     cm = confusion_matrix(y_true, y_pred)
     
     # Save confusion matrix plot
+    os.makedirs(DATA_DIR, exist_ok=True)
     plt.figure(figsize=(10, 8))
     sns.heatmap(cm, annot=True, fmt='d', cmap='Blues', 
                 xticklabels=class_names, yticklabels=class_names)
@@ -148,8 +150,9 @@ def train_model():
     plt.ylabel('True Label')
     plt.xlabel('Predicted Label')
     plt.tight_layout()
-    plt.savefig('confusion_matrix.png', dpi=300, bbox_inches='tight')
-    print(f"\nConfusion matrix saved as 'confusion_matrix.png'")
+    cm_path = os.path.join(DATA_DIR, 'confusion_matrix.png')
+    plt.savefig(cm_path, dpi=300, bbox_inches='tight')
+    print(f"\nConfusion matrix saved as '{cm_path}'")
     
     # Per-class accuracy
     print("\nPer-Class Accuracy:")
@@ -194,7 +197,8 @@ def train_model():
     tokenizer.save_pretrained(OUTPUT_DIR)
     
     # Save training metrics
-    with open("training_metrics.txt", "w") as f:
+    metrics_path = os.path.join(DATA_DIR, "training_metrics.txt")
+    with open(metrics_path, "w") as f:
         f.write("FINAL TRAINING METRICS\n")
         f.write("="*50 + "\n\n")
         f.write("Test Set Results:\n")
@@ -209,8 +213,8 @@ def train_model():
     
     print("Training complete!")
     print(f"Model saved to: {OUTPUT_DIR}")
-    print("Confusion matrix saved as: confusion_matrix.png")
-    print("Training metrics saved as: training_metrics.txt")
+    print(f"Confusion matrix saved as: {cm_path}")
+    print(f"Training metrics saved as: {metrics_path}")
 
 if __name__ == "__main__":
     # Check if GPU is available
