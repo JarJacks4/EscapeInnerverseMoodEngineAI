@@ -1,4 +1,10 @@
 import torch
+import os
+
+# Clear any cached CUDA memory and reset
+if torch.cuda.is_available():
+    torch.cuda.empty_cache()
+
 from datasets import load_dataset
 from transformers import (
     RobertaTokenizer, 
@@ -8,7 +14,6 @@ from transformers import (
     DataCollatorWithPadding
 )
 import numpy as np
-import os
 from sklearn.metrics import accuracy_score, precision_recall_fscore_support, confusion_matrix, classification_report
 import matplotlib.pyplot as plt
 import seaborn as sns
@@ -18,7 +23,7 @@ MODEL_NAME = "roberta-base"
 OUTPUT_DIR = "./models/mood_model"
 DATA_DIR = "./data"
 NUM_EPOCHS = 3
-BATCH_SIZE = 16
+BATCH_SIZE = 4  # Reduced for GPU memory
 
 def compute_metrics(eval_pred):
     """Helper to calculate comprehensive metrics during training"""
@@ -75,6 +80,9 @@ def train_model():
         id2label=id2label, 
         label2id=label2id
     )
+    
+    # Enable gradient checkpointing to save VRAM
+    model.gradient_checkpointing_enable()
 
     # 5. Training Arguments
     training_args = TrainingArguments(
@@ -87,6 +95,8 @@ def train_model():
         eval_strategy="epoch",
         save_strategy="epoch",
         load_best_model_at_end=True,
+        fp16=True,  # Use mixed precision to reduce memory
+        gradient_accumulation_steps=4,  # Accumulate gradients to simulate larger batch
     )
 
     data_collator = DataCollatorWithPadding(tokenizer=tokenizer)
