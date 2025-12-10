@@ -452,27 +452,3 @@ The mood inference is powered by a fine-tuned **RoBERTa-base** transformer model
 
 ---
 
-## Interactive Documentation
-
-When running locally, access the interactive API docs at:
-
-- **Swagger UI:** http://localhost:8000/docs
-- **ReDoc:** http://localhost:8000/redoc
-
----
-
-## Rate Limits
-
-| Plan | Requests/Minute | Requests/Day |
-|------|-----------------|--------------|
-| Free | 10 | 100 |
-| Developer | 60 | 5,000 |
-| Production | 300 | 50,000 |
-
----
-
-## Support
-
-For API support, contact: **api-support@escapeapp.ai**
-
-GitHub: https://github.com/epsilon403/mood_engine
